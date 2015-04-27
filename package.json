@@ -21,5 +21,10 @@
    "json",
    "ping",
    "status page"
- ]
+ ],
+ "repository": {
+   "type": "git",
+   "url": "https://github.com/mr-porter/mrp-health"
+ },
+ "homepage": "https://github.com/mr-porter/mrp-health"
 }
