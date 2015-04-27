@@ -1,3 +1,4 @@
+var Promises = require('es6-promise').Promise
 function HealtCheck(obj) {
   this.healthCheckObject = this.getApplicationDetails(obj);
   this.healthChecksArray = obj.checks;
@@ -10,7 +11,7 @@ HealtCheck.prototype.getHealthCheckResult = function(obj) {
 
     var application = self.healthCheckObject
 
-    application.checks = checks;
+    application.checks = checks[0];
     return {"application" : application}
 
   });
@@ -34,20 +35,25 @@ HealtCheck.prototype.getApplicationDetails = function(obj) {
 
 HealtCheck.prototype.getHealthChecks = function() {
 
-  var CheckArray = this.healthChecksArray;
+  var checkArray = this.healthChecksArray;
   var self = this;
   var servicesCheck = [];
 
-  CheckArray.forEach(function(v, i) {
+  // if no checks, will exit
+  if(!checkArray) {
+    return Promises.resolve([], 'no checks array')
+  }
 
-    var url = CheckArray[i].url;
+  checkArray.forEach(function(v, i) {
+
+    var url = v.url;
 
     var results = self.getServiceStatus(url).then(function(data) {
 
-      CheckArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
-      CheckArray[i].dateOfCheck = new Date().toISOString();
+      checkArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
+      checkArray[i].dateOfCheck = new Date().toISOString();
 
-      return CheckArray;
+      return checkArray;
 
     });
 
@@ -55,7 +61,7 @@ HealtCheck.prototype.getHealthChecks = function() {
 
   });
 
-  return require('es6-promise').Promise.all(servicesCheck)
+  return Promises.all(servicesCheck)
 };
 
 
