@@ -1,7 +1,7 @@
 {
   "name": "mrp-health",
   "version": "0.0.1",
-  "description": "health-check your services",
+  "description": "health check your applicaiton",
   "main": "index.js",
   "scripts": {
     "test": "DEBUG=health-check node test.js"
@@ -21,5 +21,5 @@
    "json"
    "ping",
    "status page"
- ],
+ ]
 }
