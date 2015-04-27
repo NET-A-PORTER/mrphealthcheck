@@ -47,7 +47,8 @@ HealtCheck.prototype.getHealthChecks = function() {
       CheckArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
       CheckArray[i].dateOfCheck = new Date().toISOString();
 
-      return CheckArray
+      return CheckArray;
+
     });
 
     servicesCheck.push(results);
@@ -66,8 +67,7 @@ HealtCheck.prototype.getServiceStatus = function(url) {
 
   }, function Error(error) {
 
-
-    return error.response.error
+    return error.response.error;
 
   });
 };
