@@ -1,80 +1,77 @@
-var http = require('./lib/http');
-var Promises = require('es6-promise').Promise;
-var debug = require('debug')('health-check');
+function HealtCheck(obj) {
+  this.healthCheckObject = this.getApplicationDetails(obj);
+  this.healthChecksArray = obj.checks;
+};
 
-module.exports = function(healthCheckObject) {
+HealtCheck.prototype.getHealthCheckResult = function(obj) {
+  var self = this;
 
-  return buildHealthChecks(healthCheckObject.checks).then(function(data) {
+  return this.getHealthChecks().then(function(checks) {
 
-    debug('buildHealthCheck data', data[0]);
+    var application = self.healthCheckObject
 
-    var application = applicationDetails(healthCheckObject);
-
-    application.checks = data[0];
-
+    application.checks = checks;
     return {"application" : application}
 
   });
 
 };
 
-function applicationDetails(healthCheckObject) {
-
+HealtCheck.prototype.getApplicationDetails = function(obj) {
   var application = {};
 
-  for(item in healthCheckObject) {
-
+  for(item in obj) {
     // checks are handled differently, see buildHealthChecks method
     if(item !== 'checks') {
-
-      application[item] = healthCheckObject[item];
-
+      application[item] = obj[item];
     }
 
-  }
-  debug('application details ', application);
+  };
 
-  return application
-}
+  return application;
 
-function buildHealthChecks(checksArray) {
+};
 
+HealtCheck.prototype.getHealthChecks = function() {
+
+  var CheckArray = this.healthChecksArray;
+  var self = this;
   var servicesCheck = [];
 
-  checksArray.forEach(function(v, i) {
+  CheckArray.forEach(function(v, i) {
 
-    var url = checksArray[i].url;
+    var url = CheckArray[i].url;
 
-    var results = getServiceStatus(url).then(function(data) {
+    var results = self.getServiceStatus(url).then(function(data) {
 
-      debug(url, 'status:', data.status);
+      CheckArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
+      CheckArray[i].dateOfCheck = new Date().toISOString();
 
-      checksArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
-      checksArray[i].dateOfCheck = new Date().toISOString();
-
-      debug('checkArray inside promise ', checksArray[i]);
-
-      return checksArray
+      return CheckArray
     });
 
     servicesCheck.push(results);
 
-  })
+  });
 
-  return Promises.all(servicesCheck)
-}
+  return require('es6-promise').Promise.all(servicesCheck)
+};
 
-function getServiceStatus(url) {
 
-  return http.get(url).then(function(data) {
+HealtCheck.prototype.getServiceStatus = function(url) {
+
+  return require('./lib/http').get(url).then(function(data) {
 
     return data;
 
   }, function Error(error) {
 
-    debug('getServiceStatus Error ', error.response.error);
 
     return error.response.error
 
   });
-}
+};
+
+module.exports = function (obj) {
+  return new HealtCheck(obj).getHealthCheckResult(obj);
+};

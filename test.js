@@ -25,6 +25,8 @@ var result = health({
 }
 })
 
+
+// console.log(result)
 result.then(function healthCheckData(data) {
   console.log(JSON.stringify(data))
 })
