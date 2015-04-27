@@ -18,7 +18,7 @@
    "healtcheck",
    "express",
    "status",
-   "json"
+   "json",
    "ping",
    "status page"
  ]
