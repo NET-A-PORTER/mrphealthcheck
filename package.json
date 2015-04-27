@@ -4,7 +4,8 @@
   "description": "health check your applicaiton",
   "main": "index.js",
   "scripts": {
-    "test": "DEBUG=health-check node test.js"
+    "test": "npm run istanbul",
+    "istanbul": "node_modules/.bin/istanbul cover ./node_modules/.bin/jasmine && node_modules/.bin/istanbul check-coverage --statement 70 --branches 70"
   },
   "author": "mrporterdev <mrportertechteam@mrporter.com>",
   "license": "MIT",
@@ -14,17 +15,23 @@
     "superagent": "^1.2.0"
   },
   "keywords": [
-   "health",
-   "healtcheck",
-   "express",
-   "status",
-   "json",
-   "ping",
-   "status page"
- ],
- "repository": {
-   "type": "git",
-   "url": "https://github.com/mr-porter/mrp-health"
- },
- "homepage": "https://github.com/mr-porter/mrp-health"
+    "health",
+    "healtcheck",
+    "express",
+    "status",
+    "json",
+    "ping",
+    "status page"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mr-porter/mrp-health"
+  },
+  "homepage": "https://github.com/mr-porter/mrp-health",
+  "devDependencies": {
+    "istanbul": "^0.3.13",
+    "jasmine": "^2.2.1",
+    "nock": "^1.7.1",
+    "timekeeper": "0.0.5"
+  }
 }
