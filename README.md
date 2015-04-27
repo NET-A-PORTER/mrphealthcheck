@@ -1,6 +1,11 @@
 # Health Check
 Simple and highly customisable JSON health check builder.
 
+``` javascript
+  npm install mrp-health --save
+```
+
+
 
 ``` javascript
 var status = require('mrp-health');
