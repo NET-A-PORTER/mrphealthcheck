@@ -1,8 +1,9 @@
-var Promises = require('es6-promise').Promise
+var Promises = require('es6-promise').Promise;
+
 function HealtCheck(obj) {
   this.healthCheckObject = this.getApplicationDetails(obj);
   this.healthChecksArray = obj.checks;
-};
+}
 
 HealtCheck.prototype.getHealthCheckResult = function(obj) {
   var self = this;
@@ -27,7 +28,7 @@ HealtCheck.prototype.getApplicationDetails = function(obj) {
       application[item] = obj[item];
     }
 
-  };
+  }
 
   return application;
 
@@ -72,9 +73,7 @@ HealtCheck.prototype.getServiceStatus = function(url) {
     return data;
 
   }, function Error(error) {
-
-    return error.response.error;
-
+      return error.response.error;
   });
 };
 
