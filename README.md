@@ -80,7 +80,7 @@ module.exports = function(req, res) {
 };
 ```
 
-## Generic Example Output:
+## Generic Example:
 ``` javascript
 {
 	"application": {
