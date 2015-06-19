@@ -31,7 +31,7 @@ var results = status({
 ```
 
 
-#Product Page Example:
+## Product Page Example:
 ``` javascript
 /**
  * Class - healthMiddleware - executes healthcheck module for a given route 
@@ -80,7 +80,7 @@ module.exports = function(req, res) {
 };
 ```
 
-#Example Output
+## Generic Example Output:
 ``` javascript
 {
 	"application": {
