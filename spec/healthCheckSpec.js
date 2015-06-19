@@ -105,6 +105,41 @@ describe("Health Check Modules", function() {
 
   });
 
+    it("Should handle timeout", function(done) {
+        nock.enableNetConnect();
+
+        health({
+            "name": "test app",
+            "uptimeSeconds": 300,
+            "env": process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : "development",
+            "nodeVersion": "0.10.31",
+            "random": "You can pass anything",
+            "checks": [
+                {
+                    'name': 'real timeout',
+                    'url': 'http://mrporter.com:801/'
+                },
+                {
+                    'name': 'not found',
+                    'url': 'http://384u385.com'
+                },
+                {
+                    'name': 'real reddit',
+                    'url': 'http://www.reddit.com/'
+                }
+            ]
+
+        }).then(function(data) {
+            expect(data.application.checks[0].result).toBe('FAILURE');
+            expect(data.application.checks[1].result).toBe('FAILURE');
+            expect(data.application.checks[2].result).toBe('SUCCESS');
+            nock.disableNetConnect();
+
+            done();
+        });
+
+    });
+
 
 
 
