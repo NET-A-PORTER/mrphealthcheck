@@ -30,6 +30,56 @@ var results = status({
 
 ```
 
+
+#Product Page Example:
+``` javascript
+/**
+ * Class - healthMiddleware - executes healthcheck module for a given route 
+ *
+ * @class healthMiddleware
+ * @static
+ * @example app.use('/health/check', require('healthcheck');
+ */
+module.exports = function(req, res) {
+
+	var os = require('os');
+
+	var appUrl = req.protocol + '://' + req.get('host');
+	var build = rootRequire('build.json') || {};
+	var results = require('mrp-health')({
+		'name': 'Mr Porter Product Page',
+		"uptimeSeconds": parseInt(process.uptime(), 10),
+		'buildTime': build.buildTime,
+		"env": req.app.settings.env, //set consistently by server.init
+		"nodeVersion": process.versions.node,
+		"buildNumber": build.tag,
+		"buildUrl": "http://xyz/jenkins/job/CI-mrp_product-page/" + build.tag,
+		"gitCommit": build.commit,
+		"gitUrl": "http://xyz/product-page/commits/" + build.commit,
+		"host": {
+			"hostname": os.hostname(),
+			"uptimeSeconds": parseInt(os.uptime(), 10)
+		},
+		"checks": [
+			{
+				'name': 'Check Product Page App',
+				'url': appUrl
+			},
+			{
+				'name': 'LAD API Product Details',
+				'url': "http://xyz:80/categories?business=MRP&country=GB&lang=en"
+			}
+		]
+
+	});
+
+	results.then(function(healthCheck) {
+		res.json(healthCheck);
+	});
+
+};
+```
+
 #Example Output
 ``` javascript
 {
