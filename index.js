@@ -1,16 +1,16 @@
 var Promises = require('es6-promise').Promise;
 
-function HealtCheck(obj) {
+function HealthCheck(obj) {
   this.healthCheckObject = this.getApplicationDetails(obj);
   this.healthChecksArray = obj.checks;
 }
 
-HealtCheck.prototype.getHealthCheckResult = function(obj) {
+HealthCheck.prototype.getHealthCheckResult = function(obj) {
   var self = this;
 
   return this.getHealthChecks().then(function(checks) {
 
-    var application = self.healthCheckObject
+    var application = self.healthCheckObject;
 
     application.checks = checks[0];
     return {"application" : application}
@@ -19,10 +19,10 @@ HealtCheck.prototype.getHealthCheckResult = function(obj) {
 
 };
 
-HealtCheck.prototype.getApplicationDetails = function(obj) {
+HealthCheck.prototype.getApplicationDetails = function(obj) {
   var application = {};
 
-  for(item in obj) {
+  for(var item in obj) {
     // checks are handled differently, see buildHealthChecks method
     if(item !== 'checks') {
       application[item] = obj[item];
@@ -34,7 +34,7 @@ HealtCheck.prototype.getApplicationDetails = function(obj) {
 
 };
 
-HealtCheck.prototype.getHealthChecks = function() {
+HealthCheck.prototype.getHealthChecks = function() {
 
   var checkArray = this.healthChecksArray;
   var self = this;
@@ -66,7 +66,7 @@ HealtCheck.prototype.getHealthChecks = function() {
 };
 
 
-HealtCheck.prototype.getServiceStatus = function(url) {
+HealthCheck.prototype.getServiceStatus = function(url) {
 
   return require('./lib/http').get(url).then(function(data) {
 
@@ -78,5 +78,5 @@ HealtCheck.prototype.getServiceStatus = function(url) {
 };
 
 module.exports = function (obj) {
-  return new HealtCheck(obj).getHealthCheckResult(obj);
+  return new HealthCheck(obj).getHealthCheckResult(obj);
 };

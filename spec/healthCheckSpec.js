@@ -9,8 +9,6 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000
 
 describe("Health Check Modules", function() {
 
-
-
     it("Should handle checks against external services with error codes", function(done) {
 
         var googleRequest = nock('http://googleerror.com')
@@ -49,8 +47,4 @@ describe("Health Check Modules", function() {
         });
 
     });
-
-
-
-
 });
