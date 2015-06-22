@@ -6,9 +6,8 @@ Simple and highly customisable JSON health check builder.
 ```
 
 
-
 ``` javascript
-var status = require('mrp-health');
+var status = require('mrphealthcheck');
 
 var results = status({
   "name": "some-app",
@@ -38,7 +37,7 @@ var results = status({
  *
  * @class healthMiddleware
  * @static
- * @example app.use('/health/check', require('healthcheck');
+ * @example app.use('/health/check', require('mrphealthcheck');
  */
 module.exports = function(req, res) {
 
@@ -46,7 +45,7 @@ module.exports = function(req, res) {
 
 	var appUrl = req.protocol + '://' + req.get('host');
 	var build = rootRequire('build.json') || {};
-	var results = require('mrp-health')({
+	var results = require('mrphealthcheck')({
 		'name': 'Mr Porter Product Page',
 		"uptimeSeconds": parseInt(process.uptime(), 10),
 		'buildTime': build.buildTime,
