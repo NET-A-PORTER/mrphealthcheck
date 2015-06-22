@@ -1,5 +1,5 @@
 {
-  "name": "mrp-health",
+  "name": "mrphealthcheck",
   "version": "0.1.3",
   "description": "health check your applicaiton",
   "main": "index.js",
