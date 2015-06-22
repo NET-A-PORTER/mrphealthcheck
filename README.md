@@ -2,7 +2,7 @@
 Simple and highly customisable JSON health check builder.
 
 ``` javascript
-  npm install mrp-health --save
+  npm install mrphealthcheck --save
 ```
 
 
