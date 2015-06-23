@@ -1,5 +1,7 @@
 var Promises = require('es6-promise').Promise;
 
+var DEFAULT_TIME_OUT_MS = 2000;
+
 function HealthCheck(obj) {
   this.healthCheckObject = this.getApplicationDetails(obj);
   this.healthChecksArray = obj.checks;
@@ -12,7 +14,7 @@ HealthCheck.prototype.getHealthCheckResult = function(obj) {
 
     var application = self.healthCheckObject;
 
-    application.checks = checks[0];
+    application.checks = checks;
     return {"application" : application}
 
   });
@@ -50,14 +52,17 @@ HealthCheck.prototype.getHealthChecks = function() {
   checkArray.forEach(function(v, i) {
 
     var url = v.url;
-    var timeout = v.timeout || 2000;
+    var timeout = v.timeout || DEFAULT_TIME_OUT_MS;
 
     var results = self.getServiceStatus(url, timeout).then(function(data) {
 
       checkArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
       checkArray[i].dateOfCheck = new Date().toISOString();
 
-      return checkArray;
+      // No need to return the timeout back to the user.
+      delete checkArray[i].timeout;
+
+      return checkArray[i];
 
     });
 

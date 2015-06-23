@@ -106,8 +106,24 @@ describe("Health Check Modules", function() {
         });
 
     });
-
-
+    it("Should hide the user specified timeout in the response.", function(done) {
+        var googleRequest = createDelayedConnectionMockService('http://google.com', 500);
+        health({
+            "name": "test app",
+            "checks": [
+                {
+                    'name': 'Google',
+                    'url': 'http://google.com/',
+                    'timeout': 1000
+                }
+            ]
+        }).then(function(data) {
+            expect(data.application.checks[0].name).toBe('Google');
+            expect(data.application.checks[0].timeout).toBeUndefined();
+            googleRequest.done();
+            done();
+        });
+    });
 });
 
 createDelayedConnectionMockService = function(url, timeout) {
