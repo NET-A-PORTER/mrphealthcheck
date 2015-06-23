@@ -22,6 +22,8 @@ HealthCheck.prototype.getHealthCheckResult = function(obj) {
 HealthCheck.prototype.getApplicationDetails = function(obj) {
   var application = {};
 
+  this.timeout = obj.timeout;
+
   for(var item in obj) {
     // checks are handled differently, see buildHealthChecks method
     if(item !== 'checks') {
@@ -48,8 +50,9 @@ HealthCheck.prototype.getHealthChecks = function() {
   checkArray.forEach(function(v, i) {
 
     var url = v.url;
+    var timeout = v.timeout || 2000;
 
-    var results = self.getServiceStatus(url).then(function(data) {
+    var results = self.getServiceStatus(url, timeout).then(function(data) {
 
       checkArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
       checkArray[i].dateOfCheck = new Date().toISOString();
@@ -66,9 +69,9 @@ HealthCheck.prototype.getHealthChecks = function() {
 };
 
 
-HealthCheck.prototype.getServiceStatus = function(url) {
+HealthCheck.prototype.getServiceStatus = function(url, timeout) {
 
-  return require('./lib/http').get(url).then(function(data) {
+  return require('./lib/http').get(url, timeout).then(function(data) {
 
     return data;
 
