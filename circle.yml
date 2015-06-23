@@ -1,0 +1,24 @@
+dependencies:
+  pre:
+    - npm install
+    - npm install -g jasmine
+    - ls
+    - sh login.sh
+
+test:
+  override:
+    - npm test
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - echo "doing a patch update!"
+      - git config --global user.email "mrportertechteam@mrporter.com"
+      - git config --global user.name "mrporterdev"
+      - npm version patch
+      - git commit --amend -m 'automated patching [ci skip]'
+      - git push
+      - npm publish ./
+
+
