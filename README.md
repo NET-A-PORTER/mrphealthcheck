@@ -1,4 +1,4 @@
-# Health Check [![Circle CI](https://circleci.com/gh/mr-porter/mrp-health/tree/master.svg?style=svg)](https://circleci.com/gh/mr-porter/mrp-health/tree/master)
+# Health Check [![Circle CI](https://circleci.com/gh/NET-A-PORTER/mrphealthcheck.svg?style=svg&circle-token=dc79a9df5965b1449180d40288b4297d7c41a57c)](https://circleci.com/gh/NET-A-PORTER/mrphealthcheck)
 Simple and highly customisable JSON health check builder.
 
 ``` javascript
