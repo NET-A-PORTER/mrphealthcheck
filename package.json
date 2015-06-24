@@ -1,7 +1,7 @@
 {
   "name": "mrphealthcheck",
-  "version": "0.1.8",
-  "description": "health check your applicaiton",
+  "version": "0.1.9",
+  "description": "health check your applicaiton(mrporter)",
   "main": "index.js",
   "scripts": {
     "test": "npm run istanbul",
@@ -23,11 +23,6 @@
     "ping",
     "status page"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mr-porter/mrp-health"
-  },
-  "homepage": "https://github.com/mr-porter/mrp-health",
   "devDependencies": {
     "istanbul": "^0.3.13",
     "jasmine": "^2.2.1",
