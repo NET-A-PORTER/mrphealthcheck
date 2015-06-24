@@ -1,9 +1,6 @@
 var health = require('../index');
 var nock = require('nock');
-var tk = require('timekeeper');
-// free time for testing
-var time = new Date(1330688329321);
-tk.freeze(time);
+var Promises = require('es6-promise').Promise;
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
@@ -121,6 +118,33 @@ describe("Health Check Modules", function() {
             expect(data.application.checks[0].name).toBe('Google');
             expect(data.application.checks[0].timeout).toBeUndefined();
             googleRequest.done();
+            done();
+        });
+    });
+
+    it("Should support custom http clients.", function(done) {
+        var clientCalled = false;
+
+        var httpClient = {
+            get: function (url, timeout, queryParams, headers) {
+                clientCalled = true;
+                return new Promises(function(resolve, reject) {
+                    resolve({});
+                });
+            }
+        };
+
+        health({
+            "name": "test app",
+            "checks": [
+                {
+                    'name': 'Google',
+                    'url': 'http://google.com/',
+                    'timeout': 1000
+                }
+            ]
+        }, httpClient).then(function(data) {
+            expect(clientCalled).toBeTruthy();
             done();
         });
     });
