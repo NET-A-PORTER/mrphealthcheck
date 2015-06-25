@@ -1,6 +1,6 @@
 {
   "name": "mrphealthcheck",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "health check your applicaiton(mrporter)",
   "main": "index.js",
   "scripts": {
