@@ -2,7 +2,7 @@ var health = require('./index');
 
 var result = health({
 
-    "name": "My App",
+    "name": "My App HealthCheck",
     "bootTime": "2014-02-28T15:30:00Z", // http://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations
     "buildTime": "2014-02-28T15:30:00Z",
     "version": "1.0.0",
