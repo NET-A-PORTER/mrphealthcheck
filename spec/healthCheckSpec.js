@@ -32,9 +32,9 @@ describe("Health Check Modules", function() {
             ]
         }).then(function(data) {
             expect(data.application.checks[0].name).toBe('google');
-            expect(data.application.checks[0].result).toBe('FAILURE');
+            expect(data.application.checks[0].result).toBe('FAILED');
             expect(data.application.checks[1].name).toBe('yahoo');
-            expect(data.application.checks[1].result).toBe('FAILURE');
+            expect(data.application.checks[1].result).toBe('FAILED');
 
             googleRequest.done();
             yahooRequest.done();
@@ -65,7 +65,7 @@ describe("Health Check Modules", function() {
             expect(data.application.checks[0].name).toBe('Google');
             expect(data.application.checks[0].result).toBe('SUCCESS');
             expect(data.application.checks[1].name).toBe('Yahoo');
-            expect(data.application.checks[1].result).toBe('FAILURE');
+            expect(data.application.checks[1].result).toBe('FAILED');
 
             googleRequest.done();
             yahooRequest.done();
@@ -93,7 +93,7 @@ describe("Health Check Modules", function() {
             ]
         }).then(function(data) {
             expect(data.application.checks[0].name).toBe('Google');
-            expect(data.application.checks[0].result).toBe('FAILURE');
+            expect(data.application.checks[0].result).toBe('FAILED');
             expect(data.application.checks[1].name).toBe('Yahoo');
             expect(data.application.checks[1].result).toBe('SUCCESS');
 

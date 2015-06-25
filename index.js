@@ -64,10 +64,10 @@ HealthCheck.prototype.getHealthChecks = function() {
         var timeout = v.timeout || DEFAULT_TIME_OUT_MS;
 
         var results = self.getServiceStatus(url, timeout, self.httpClient).then(function(data) {
-            checkArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILURE');
+            checkArray[i].result = (data.status === 200 ? 'SUCCESS' : 'FAILED');
             return removeUnneededAttributesFromCheck(addDateToCheck(checkArray[i]));
         }).catch(function(error) {
-            checkArray[i].result = 'FAILURE';
+            checkArray[i].result = 'FAILED';
             return removeUnneededAttributesFromCheck(addDateToCheck(checkArray[i]));
         });
 

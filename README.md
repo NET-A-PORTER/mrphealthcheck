@@ -100,7 +100,7 @@ module.exports = function(req, res) {
     "checks": [
 			{
 				"name": "mr-porter product page",
-				"result": "FAILURE", // SUCCESS, or FAILURE
+				"result": "FAILED", // SUCCESS, or FAILED
 				"dateOfCheck": "2015-04-27T11:34:46.336Z",
 			}
 		]
