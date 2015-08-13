@@ -2,9 +2,95 @@ var health = require('../index');
 var nock = require('nock');
 var Promises = require('es6-promise').Promise;
 
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
 
 describe("Health Check Modules", function() {
+  it("Should handle multiple checks", function(done) {
+      var googleRequest = nock('http://googlecom')
+          .get('/')
+          .reply(200, {});
+
+      var yahooRequest = nock('http://yahoocom')
+          .get('/')
+          .reply(200, {});
+
+      var hotmail = nock('http://hotmailcom')
+          .get('/')
+          .reply(200, {});
+
+      var facebook = nock('http://facebookcom')
+          .get('/')
+          .reply(200, {});
+
+      var bing = nock('http://bingcom')
+          .get('/')
+          .reply(200, {});
+
+      var msn = nock('http://msncom')
+          .get('/')
+          .reply(200, {});
+
+      var myspace = nock('http://myspacecom')
+          .get('/')
+          .reply(200, {});
+
+
+      health({
+          "name": "test app",
+          "uptimeSeconds": 300,
+          "env": process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : "development",
+          "nodeVersion": "0.10.31",
+          "checks": [
+              {
+                  'name': 'google',
+                  'url': 'http://googlecom'
+              },
+              {
+                  'name': 'yahoo',
+                  'url': 'http://yahoocom'
+              },
+              {
+                  'name': 'hotmail',
+                  'url': 'http://hotmailcom'
+              },
+              {
+                  'name': 'faceook',
+                  'url': 'http://facebookcom'
+              },
+              {
+                  'name': 'bing',
+                  'url': 'http://bingcom'
+              },
+              {
+                  'name': 'msn',
+                  'url': 'http://msncom'
+              },
+              {
+                  'name': 'myspace',
+                  'url': 'http://myspacecom'
+              }
+          ]
+      }).then(function(data) {
+          expect(data.application.checks[0].name).toBe('google');
+          expect(data.application.checks[0].result).toBe('SUCCESS');
+          expect(data.application.checks[1].name).toBe('yahoo');
+          expect(data.application.checks[1].result).toBe('SUCCESS');
+
+          googleRequest.done();
+          yahooRequest.done();
+          hotmail.done();
+          facebook.done();
+          bing.done();
+          msn.done();
+          msn.done();
+          myspace.done();
+
+
+          done();
+      });
+  });
+
+
 
     it("Should handle checks against external services with error codes", function(done) {
         var googleRequest = nock('http://googleerror.com')
@@ -35,9 +121,6 @@ describe("Health Check Modules", function() {
             expect(data.application.checks[0].result).toBe('FAILED');
             expect(data.application.checks[1].name).toBe('yahoo');
             expect(data.application.checks[1].result).toBe('FAILED');
-
-            googleRequest.done();
-            yahooRequest.done();
 
             done();
         });
