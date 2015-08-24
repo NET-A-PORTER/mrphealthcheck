@@ -5,6 +5,11 @@ Simple and highly customisable JSON health check builder.
   npm install mrphealthcheck --save
 ```
 
+# Team using this modules:
+
+* PAC (Product Pages)
+* CAP (Checkout)
+* Team X (Product Listing)
 
 ``` javascript
 var status = require('mrphealthcheck');
